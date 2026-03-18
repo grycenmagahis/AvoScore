@@ -18,7 +18,7 @@ from PyQt6.QtGui import QIcon
 from gm_resources import resourcePath
 from attr import StartMenuAttr
 from progsetting import ProgSetting
-from window.projectcard import ProjectCard
+from window.projectcard import ProjectCard, NewProjectCard
 from fileio.startfile import StartFile
 
 class StartMenu(QWidget):
@@ -257,6 +257,8 @@ class StartMenu(QWidget):
         self._clearCardGrid()
 
         # Recreate cards
+        newCard = NewProjectCard(parent=self._cardsContainer, onNew=self.newCallBack)
+        self._cardWidgets.append(newCard)
         for proj in projects:
             card = ProjectCard(
                 proj,

@@ -10,6 +10,53 @@ from PyQt6.QtCore import Qt, QPoint
 
 from gm_resources import GMessageBox
 
+
+class NewProjectCard(QFrame):
+    """A dashed tile that triggers creating a new project."""
+
+    CARD_WIDTH = 300
+    CARD_MIN_HEIGHT = 116
+    CARD_MAX_HEIGHT = 136
+
+    def __init__(self, parent=None, onNew=None):
+        super().__init__(parent)
+        self.onNew = onNew
+        self.setProperty("class", "NewProjectCard")
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setMinimumSize(self.CARD_WIDTH, self.CARD_MIN_HEIGHT)
+        self.setMaximumSize(self.CARD_WIDTH, self.CARD_MAX_HEIGHT)
+        self._initUI()
+
+    def _initUI(self):
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(12, 10, 12, 10)
+        layout.setSpacing(6)
+        layout.addStretch(1)
+
+        plus = QLabel("+", self)
+        plus.setProperty("class", "NewProjectPlus")
+        plus.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        plus.setFixedSize(44, 44)
+        layout.addWidget(plus, 0, Qt.AlignmentFlag.AlignHCenter)
+
+        title = QLabel("New Project", self)
+        title.setProperty("class", "NewProjectTitle")
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(title)
+
+        sub = QLabel("Create a new scoreboard", self)
+        sub.setProperty("class", "NewProjectSubtitle")
+        sub.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(sub)
+
+        layout.addStretch(1)
+
+    def mousePressEvent(self, event):
+        if self.onNew:
+            self.onNew()
+        super().mousePressEvent(event)
+
 class ProjectCard(QFrame):
     """A custom card widget displaying a project with image, title, sport tag, description and date."""
 

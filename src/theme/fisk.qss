@@ -61,6 +61,34 @@ QMainWindow {
 	border: 1px solid #404040;
 }
 
+.NewProjectCard {
+	background: transparent;
+	border-radius: 12px;
+	border: 2px dashed #F5A623;
+}
+
+.NewProjectPlus {
+	background-color: #2d2d2d;
+	border: 2px solid #F5A623;
+	border-radius: 22px;
+	color: #F5A623;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.NewProjectTitle {
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	background: transparent;
+}
+
+.NewProjectSubtitle {
+	color: #888888;
+	font-size: 12px;
+	background: transparent;
+}
+
 .ProjectCardContent {
 	background: transparent;
 }
