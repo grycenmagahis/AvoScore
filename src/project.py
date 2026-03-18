@@ -18,6 +18,14 @@ class Project:
             PropInstType.TYPE: PropWidgetType.TEXTEDIT,
             PropInstType.VALUE: "AvoScore",
         },
+        "Sport": {
+            PropInstType.TYPE: PropWidgetType.TEXTEDIT,
+            PropInstType.VALUE: "General",
+        },
+        "Description": {
+            PropInstType.TYPE: PropWidgetType.TEXTEDIT,
+            PropInstType.VALUE: "",
+        },
         "Global Directory": {
             PropInstType.TYPE: PropWidgetType.DRSAVE,
             PropInstType.VALUE: "./Output/{}"

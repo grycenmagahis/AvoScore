@@ -23,8 +23,8 @@ QMainWindow {
 
 /* Header Bar */
 .HeaderBar {
-    background-color: #1a1a1a;
-    border-bottom: 1px solid #333333;
+	background-color: #2d2d2d;
+	border-bottom: 1px solid #404040;
     padding: 10px;
 }
 
@@ -56,30 +56,37 @@ QMainWindow {
 
 /* Project Cards */
 .ProjectCard {
-    background-color: #2d2d2d;
+	background-color: #353535;
     border-radius: 12px;
-    border: 1px solid #333333;
+	border: 1px solid #404040;
+}
+
+.ProjectCardContent {
+	background: transparent;
 }
 
 .ProjectCard:hover {
     border: 1px solid #F5A623;
-    background-color: #353535;
+	background-color: #404040;
 }
 
 .CardTitle {
     color: #ffffff;
     font-size: 16px;
     font-weight: bold;
+	background: transparent;
 }
 
 .CardDescription {
     color: #aaaaaa;
     font-size: 13px;
+	background: transparent;
 }
 
 .CardDate {
     color: #666666;
     font-size: 12px;
+	background: transparent;
 }
 
 /* Sport Tags */

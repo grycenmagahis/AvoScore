@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QPushButton, QLineEdit, QWidget, QHBoxLayout
+from PyQt6.QtWidgets import QPushButton, QLineEdit, QWidget, QHBoxLayout, QSizePolicy
 
 class PropLineEdit(QWidget):
     def __init__(self, text, callback, parent=None):
@@ -13,6 +13,16 @@ class PropLineEdit(QWidget):
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(2)
         self._lineEdit = QLineEdit(self._text)
+
+        # The theme QSS applies generous vertical padding to QLineEdit.
+        # Without an explicit minimum height, text can get clipped inside
+        # table/tree item widgets (like the Settings dialog).
+        minHeight = 34
+        self._lineEdit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self._lineEdit.setMinimumHeight(minHeight)
+        self.setMinimumHeight(minHeight)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+
         self._button = QPushButton("Done")
         self._layout.addWidget(self._lineEdit)
         self._layout.addWidget(self._button)

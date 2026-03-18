@@ -69,6 +69,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.popOutButton.setEnabled(False)
         self.popOutButton.clicked.connect(self._popOutClicked)
 
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionProjSet)
+
         self.actionSaveAs.triggered.connect(self._saveAsTriggered)
         self.actionOpen.triggered.connect(self._openTriggered)
         self.actionNew.triggered.connect(self._newTriggered)
@@ -203,6 +206,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.toolBar.setVisible(True)
                 self.editModeButton.setEnabled(True)
                 self.actionClose.setEnabled(True)
+                self.actionProjSet.setEnabled(True)
                 self._enablePopOutButton()
 
                 self.project.setDate()
@@ -215,6 +219,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
                 self.toolBar.setVisible(False)
                 self.actionClose.setEnabled(False)
+                self.actionProjSet.setEnabled(False)
                 try:
                     self.setCentralWidget(self.startMenu)
                 except RuntimeError:
@@ -230,9 +235,44 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def _projSettingsTriggered(self):
-        settings = Settings(self.editor.getProject().getProperty(), self)
+        activeProject = None
+        if self.editor is not None:
+            try:
+                activeProject = self.editor.getProject()
+            except Exception:
+                activeProject = None
+        if activeProject is None:
+            activeProject = self.project
+
+        if activeProject is None:
+            return
+
+        settings = Settings(activeProject.getProperty(), self)
         if (settings.exec() == settings.DialogCode.Accepted):
-            self.editor.getProject().saveProperties()
+            # Apply any derived property changes (e.g., Global Directory).
+            try:
+                activeProject.saveProperties()
+            except Exception:
+                pass
+
+            # If we're in view mode, persist the property edits immediately.
+            if self.editor is None:
+                try:
+                    if activeProject.getFileName():
+                        ProjectFile(activeProject).save()
+                except Exception as ex:
+                    GMessageBox(
+                        "Project Settings",
+                        f"Failed to save project settings.\n\n{ex}",
+                        "Info",
+                        self,
+                    ).exec()
+
+            # Update recents snapshot on disk so tag/description show up next launch.
+            try:
+                StartFile().save()
+            except Exception:
+                pass
 
 
     def _aboutTriggered(self):
